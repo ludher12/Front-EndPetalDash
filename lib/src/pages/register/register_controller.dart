@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:petaldash/src/providers/user_providers.dart';
-
-import '../../models/User.dart';
+import 'package:petaldash/src/models/user.dart';
 
 class RegisterController extends GetxController{
 
@@ -43,6 +42,7 @@ class RegisterController extends GetxController{
         phone: phone,
         image: null,
         password: password,
+        sessionToken:null,
       );
 
       Response response = await userProvider.create(user);
@@ -88,7 +88,6 @@ class RegisterController extends GetxController{
       return false;
 
     }
-
 
     return true;
 

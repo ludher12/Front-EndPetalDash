@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:petaldash/src/models/User.dart';
+import 'package:petaldash/src/pages/home/home_page.dart';
 import 'package:petaldash/src/pages/login/login_page.dart';
 import 'package:petaldash/src/pages/register/register_page.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+User userSesion = User.fromJson(GetStorage().read('user') ?? {});
+
+void main() async{
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -27,10 +33,11 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       title: 'Delivery PetalDash',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: userSesion.id != null ? '/home' : '/',
       getPages: [
         GetPage(name: '/', page: ()=> LoginPage()),
-        GetPage(name: '/register', page: ()=> RegisterPage())
+        GetPage(name: '/register', page: ()=> RegisterPage()),
+        GetPage(name: '/home', page: ()=> HomePage())
       ],
       theme: ThemeData(
          primaryColor: Color(0xFFBB85B4),
