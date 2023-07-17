@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petaldash/src/models/response_api.dart';
 import 'package:petaldash/src/providers/user_providers.dart';
-
-import '../../models/User.dart';
+import 'package:petaldash/src/models/user.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 
 class RegisterController extends GetxController{
 
@@ -25,7 +28,7 @@ class RegisterController extends GetxController{
     Get.toNamed('/register');
   }
 
-  void register() async{
+  void register(BuildContext context) async{
     String email = emailController.text.trim();
     String name = nameController.text;
     String lasName = lastnameController.text;
@@ -40,6 +43,9 @@ class RegisterController extends GetxController{
     //Get.snackbar('Password', password);
     if(isValidForm(email,name, lasName, phone,password,confirmPassword)){
 
+      ProgressDialog progressDialog = ProgressDialog(context: context);
+      progressDialog.show(max: 100, msg: 'registrando usuario...');
+
       User user = User(
         id: null,
         email: email,
@@ -48,14 +54,28 @@ class RegisterController extends GetxController{
         phone: phone,
         image: null,
         password: password,
+        sessionToken:null,
       );
 
-      Response response = await userProvider.create(user);
-      
-      print('Response: ${response.body}');
+      Stream stream = await userProvider.createWithImage(user, imagefile!);
+      stream.listen((res) {
+        progressDialog.close();
+        ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
 
-      Get.snackbar('Formulario valido', 'Estas listo para enviar la petición Http');
+        if(responseApi.success== true){
+          GetStorage().write('user', responseApi.data); // datos del usuario en sesion
+          goToHomePage();
+        }else{
+          Get.snackbar('Registro fallido', responseApi.message ?? '');
+        }
+
+      });
+
     }
+  }
+
+  void goToHomePage(){
+    Get.offNamedUntil('/home', (route) => false);
   }
 
   bool isValidForm(String email,String name,String lastName, String phone, String password,   String confirmPassword){
@@ -92,6 +112,11 @@ class RegisterController extends GetxController{
       Get.snackbar('Formulario no valido', 'Las contraeñas no coinciden');
       return false;
 
+    }
+
+    if(imagefile==null){
+      Get.snackbar('Formulario no valido', 'Debes seleccionar una imagen de perfil');
+      return false;
     }
 
     return true;
