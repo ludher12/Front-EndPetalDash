@@ -3,11 +3,16 @@ import 'package:get_storage/get_storage.dart';
 import 'package:petaldash/src/models/user.dart';
 
 
-class HomeController extends GetxController{
+class HomeController extends GetxController {
   User user = User.fromJson(GetStorage().read('user') ?? {});
 
-  HomeController(){
+  HomeController() {
     print('USUARIO EN SESIÓN: ${user.toJson()}');
+  }
+
+  void singnOut(){
+    GetStorage().remove('user');
+    Get.offNamedUntil('/', (route) => false); // eliminar el historial de pantallas
   }
 
 }
