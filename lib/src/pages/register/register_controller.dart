@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:petaldash/src/providers/user_providers.dart';
 
 import '../../models/User.dart';
@@ -14,6 +17,8 @@ class RegisterController extends GetxController{
   TextEditingController confirmPasswordController = TextEditingController();
 
   UserProvider userProvider = UserProvider();
+  ImagePicker picker = ImagePicker();
+  File? imagefile;
 
 
   void goToRegisterPage(){
@@ -89,8 +94,50 @@ class RegisterController extends GetxController{
 
     }
 
-
     return true;
 
+  }
+
+  Future selectImage(ImageSource imageSource) async{
+    XFile? image = await picker.pickImage(source: imageSource);
+    if(image != null){
+      imagefile = File (image.path);
+      update();
+    }
+  }
+
+  void showAlertDialog(BuildContext context){
+    Widget galleryButton = ElevatedButton(
+      onPressed: (){
+        Get.back();
+        selectImage(ImageSource.gallery);
+      },
+      child: Text('Galeria',
+        style: TextStyle(color: Colors.black),
+      )
+    );
+    Widget cameraButton = ElevatedButton(
+        onPressed:() {
+          Get.back();
+          selectImage(ImageSource.camera);
+        },
+        child: Text('Camara',
+          style: TextStyle(color: Colors.black),
+        )
+    );
+
+
+    AlertDialog alertDialog = AlertDialog(
+      title: Text('Selecciona una opcion'),
+      actions: [
+        galleryButton,
+        cameraButton
+      ],
+    );
+
+    showDialog(context: context, builder: (BuildContext context){
+      return alertDialog;
+
+    });
   }
 }
