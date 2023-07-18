@@ -1,43 +1,82 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:petaldash/src/models/response_api.dart';
+import 'package:petaldash/src/models/user.dart';
+import 'package:petaldash/src/providers/user_providers.dart';
 
-class LoginController extends GetxController{
+class LoginController extends GetxController {
+
+  User user = User.fromJson(GetStorage().read('user') ?? {});
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  void goToRegisterPage(){
+  UserProvider usersProvider = UserProvider();
+
+  void goToRegisterPage() {
     Get.toNamed('/register');
   }
 
-  void login(){
+  void login() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
     print('Email ${email}');
     print('Password ${password}');
 
-    //Get.snackbar('Email', email);
-    //Get.snackbar('Password', password);
-    if(isValidForm(email,password)){
-      Get.snackbar('Formulario valido', 'Estas listo para enviar la petición Http');
+    if (isValidForm(email, password)) {
+
+      ResponseApi responseApi = await usersProvider.login(email, password);
+
+      print('Response Api: ${responseApi.toJson()}');
+
+      if (responseApi.success == true) {
+        GetStorage().write('user', responseApi.data); // DATOS DEL USUARIO EN SESION
+        User myUser = User.fromJson(GetStorage().read('user') ?? {});
+
+        print('Roles length: ${myUser.roles!.length}');
+
+        if (myUser.roles!.length > 1) {
+          goToRolesPage();
+        }
+        else { // SOLO UN ROL
+          goToClientProductPage();
+        }
+
+      }
+      else {
+        Get.snackbar('Login fallido', responseApi.message ?? '');
+      }
     }
   }
 
-  bool isValidForm(String email, String password){
-    if(!GetUtils.isEmail(email)){
-      Get.snackbar('Formulario no valido', 'El email no es valido');
-      return false;
-    }
-    if(email.isEmpty){
+  void goToClientProductPage() {
+    Get.offNamedUntil('/client/products/list', (route) => false);
+  }
+
+  void goToRolesPage() {
+    Get.offNamedUntil('/roles', (route) => false);
+  }
+
+  bool isValidForm(String email, String password) {
+
+    if (email.isEmpty) {
       Get.snackbar('Formulario no valido', 'Debes ingresar el email');
       return false;
     }
-    if(password.isEmpty){
-      Get.snackbar('Formulario no valido', 'Debes ingresar la contraseña');
+
+    if (!GetUtils.isEmail(email)) {
+      Get.snackbar('Formulario no valido', 'El email no es valido');
       return false;
     }
-    return true;
 
+    if (password.isEmpty) {
+      Get.snackbar('Formulario no valido', 'Debes ingresar el password');
+      return false;
+    }
+
+    return true;
   }
+
 }
