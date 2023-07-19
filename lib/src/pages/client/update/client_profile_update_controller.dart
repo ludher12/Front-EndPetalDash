@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:petaldash/src/models/User.dart';
+import 'package:petaldash/src/models/response_api.dart';
+import 'package:petaldash/src/models/user.dart';
+import 'package:petaldash/src/providers/user_providers.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
 class ClientProfileUpdateController extends GetxController{
@@ -17,6 +19,8 @@ class ClientProfileUpdateController extends GetxController{
   ImagePicker picker = ImagePicker();
   File? imagefile;
 
+  UserProvider usersProvider = UserProvider();
+
   ClientProfileUpdateController(){
     nameController.text = user.name ?? '';
     lastnameController.text = user.lastname ?? '';
@@ -26,8 +30,6 @@ class ClientProfileUpdateController extends GetxController{
     String name = nameController.text;
     String lasName = lastnameController.text;
     String phone = phoneController.text;
-
-
 
     //Get.snackbar('Email', email);
     //Get.snackbar('Password', password);
@@ -42,6 +44,19 @@ class ClientProfileUpdateController extends GetxController{
         lastname: lasName,
         phone: phone,
       );
+
+      if (imagefile == null) {
+        ResponseApi responseApi = await usersProvider.update(myUser);
+        if (responseApi.success == true){
+          user.name = name;
+          user.lastname = lasName;
+          user.phone = phone;
+          GetStorage().write('user', user);
+          print('Response API UPDATE: ${responseApi.data} ' );
+        }
+      }
+
+      progressDialog.close();
 
       /*Stream stream = await userProvider.createWithImage(user, imagefile!);
       stream.listen((res) {
