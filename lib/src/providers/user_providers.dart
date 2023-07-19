@@ -17,6 +17,26 @@ class UserProvider extends GetConnect{
     return response;
   }
 
+  // SIN IMAGEN
+  Future<ResponseApi> update(User user) async {
+    Response response = await put(
+        '$url/updateWithoutImage',
+        user.toJson(),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+
+    if (response.body == null) {
+      Get.snackbar('Error', 'No se pudo actualizar la informacion');
+      return ResponseApi();
+    }
+
+    ResponseApi responseApi = ResponseApi.fromJson(response.body);
+
+    return responseApi;
+  }
+
   Future <Stream> createWithImage(User user, File image)async {
     Uri uri = Uri.http( Environment.API_URL_OLD,'/api/users/createWithImage');
     final request = http.MultipartRequest('POST', uri);
@@ -30,6 +50,21 @@ class UserProvider extends GetConnect{
     final response = await request.send();
     return response.stream.transform(utf8.decoder);
   }
+
+  Future <Stream> updateWithImage(User user, File image)async {
+    Uri uri = Uri.http( Environment.API_URL_OLD,'/api/users/updateWithoutImage');
+    final request = http.MultipartRequest('PUT', uri);
+    request.files.add(http.MultipartFile(
+        'image',
+        http.ByteStream(image.openRead().cast()),
+        await image.length(),
+        filename: basename(image.path)
+    ));
+    request.fields['user'] = json.encode(user);
+    final response = await request.send();
+    return response.stream.transform(utf8.decoder);
+  }
+
 
 
 
