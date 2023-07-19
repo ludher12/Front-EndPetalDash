@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:petaldash/src/pages/client/products/list/clientt_products_list_controller.dart';
+import 'package:petaldash/src/pages/client/profile/info/client_profile_info_page.dart';
+import 'package:petaldash/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
+import 'package:petaldash/src/pages/flowershop/orders/list/flowershop_orders_list_page.dart';
+import 'package:petaldash/src/pages/register/register_page.dart';
+import 'package:petaldash/src/utils/custom_animated_bottom_bar.dart';
+
+
 
 class ClientProductsListPage extends StatelessWidget {
 
@@ -9,23 +16,49 @@ class ClientProductsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Client Products List'),
-            ElevatedButton(
-              onPressed: () => con.signOut(),
-              child: Text(
-                'Cerrar sesion',
-                style: TextStyle(
-                    color: Colors.black
-                ),
-              ),
-            )
-          ],
+      bottomNavigationBar: _bottonBar(),
+      body: Obx(() => IndexedStack(
+        index: con.indexTab.value,
+        children: [
+          FlowershopOrdersListPage(),
+          DeliveryOrdersListPage(),
+          ClientProfileInfoPage()
+        ],
+      )
+      )
+    );
+  }
+  Widget _bottonBar(){
+    return Obx (() =>CustomAnimatedBottomBar(
+      containerHeight: 70,
+      //Color(0xFFBB85B4)
+      backgroundColor: Color(0xFFBB85B4),
+      showElevation: true,
+      itemCornerRadius: 24 ,
+      curve: Curves.easeIn,
+      selectedIndex: con.indexTab.value,
+      onItemSelected: (index) => con.changeTab(index),
+      items: [
+        BottomNavyBarItem(
+            icon: Icon(Icons.apps),
+            title: Text('Home'),
+            activeColor : Colors.white,
+           inactiveColor: Colors.black
         ),
-      ),
+        BottomNavyBarItem(
+            icon: Icon(Icons.list),
+            title: Text('Mis pedidos'),
+            activeColor : Colors.white,
+            inactiveColor: Colors.black
+        ),
+        BottomNavyBarItem(
+            icon: Icon(Icons.person),
+            title: Text('Perfil'),
+            activeColor : Colors.white,
+            inactiveColor: Colors.black
+        ),
+      ],
+    )
     );
   }
 }

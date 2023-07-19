@@ -18,9 +18,9 @@ class UserProvider extends GetConnect{
   }
 
   // SIN IMAGEN
-  Future<ResponseApi> update(User user) async {
+  Future<ResponseApi>update(User user) async {
     Response response = await put(
-        '$url/updateWithoutImage',
+        '$url/updateWithuotImage',
         user.toJson(),
         headers: {
           'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ class UserProvider extends GetConnect{
   }
 
   Future <Stream> updateWithImage(User user, File image)async {
-    Uri uri = Uri.http( Environment.API_URL_OLD,'/api/users/updateWithoutImage');
+    Uri uri = Uri.http( Environment.API_URL_OLD,'/api/users/update');
     final request = http.MultipartRequest('PUT', uri);
     request.files.add(http.MultipartFile(
         'image',
