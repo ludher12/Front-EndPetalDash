@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:petaldash/src/models/User.dart';
 import 'package:petaldash/src/pages/client/products/list/client_products_list_page.dart';
+import 'package:petaldash/src/pages/client/profile/info/client_profile_info_page.dart';
+import 'package:petaldash/src/pages/client/update/client_profile_update_page.dart';
 import 'package:petaldash/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
 import 'package:petaldash/src/pages/flowershop/orders/list/flowershop_orders_list_page.dart';
 import 'package:petaldash/src/pages/home/home_page.dart';
@@ -46,6 +48,8 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/flowershop/orders/list', page: () => FlowershopOrdersListPage()),
         GetPage(name: '/delivery/orders/list', page: () => DeliveryOrdersListPage()),
         GetPage(name: '/client/products/list', page: () => ClientProductsListPage()),
+        GetPage(name: '/client/profile/info', page: () => ClientProfileInfoPage()),
+        GetPage(name: '/client/profile/update', page: () => ClientProfileUpdatePage()),
       ],
       theme: ThemeData(
          primaryColor: Color(0xFFBB85B4),
