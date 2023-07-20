@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petaldash/src/models/response_api.dart';
 import 'package:petaldash/src/models/user.dart';
+import 'package:petaldash/src/pages/client/profile/info/client_profile_info_controller.dart';
 import 'package:petaldash/src/providers/user_providers.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
@@ -20,6 +22,8 @@ class ClientProfileUpdateController extends GetxController{
   File? imagefile;
 
   UserProvider usersProvider = UserProvider();
+
+  ClientProfileInfoController clientProfileInfoController = Get.find();
 
   ClientProfileUpdateController(){
     nameController.text = user.name ?? '';
@@ -43,34 +47,39 @@ class ClientProfileUpdateController extends GetxController{
         name: name,
         lastname: lasName,
         phone: phone,
+        sessionToken: user.sessionToken
       );
 
       if (imagefile == null) {
         ResponseApi responseApi = await usersProvider.update(myUser);
+        print('Response API UPDATE: ${responseApi.data} ' );
+        Get.snackbar('Proceso terminado', responseApi.message ?? '');
+        progressDialog.close();
         if (responseApi.success == true){
-          user.name = name;
-          user.lastname = lasName;
-          user.phone = phone;
-          GetStorage().write('user', user);
-          print('Response API UPDATE: ${responseApi.data} ' );
+          GetStorage().write('user', responseApi.data);
+          clientProfileInfoController.user.value = User.fromJson(GetStorage().read('user') ?? {});
         }
+      }else{
+        Stream stream = await usersProvider.updateWithImage(myUser, imagefile!);
+        stream.listen((res) {
+
+          progressDialog.close();
+          ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
+          Get.snackbar('Proceso terminado', responseApi.message ?? '');
+          print('Response Api Update: ${responseApi.data}');
+
+          if(responseApi.success== true){
+            GetStorage().write('user', responseApi.data);
+            clientProfileInfoController.user.value = User.fromJson(GetStorage().read('user') ?? {});
+          }else{
+            Get.snackbar('Registro fallido', responseApi.message ?? '');
+          }
+
+        });
       }
 
+
       progressDialog.close();
-
-      /*Stream stream = await userProvider.createWithImage(user, imagefile!);
-      stream.listen((res) {
-        progressDialog.close();
-        ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
-
-        if(responseApi.success== true){
-          GetStorage().write('user', responseApi.data); // datos del usuario en sesion
-          goToHomePage();
-        }else{
-          Get.snackbar('Registro fallido', responseApi.message ?? '');
-        }
-
-      });*/
 
     }
   }
