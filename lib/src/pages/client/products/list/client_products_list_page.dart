@@ -16,49 +16,6 @@ class ClientProductsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: _bottonBar(),
-      body: Obx(() => IndexedStack(
-        index: con.indexTab.value,
-        children: [
-          FlowershopOrdersListPage(),
-          DeliveryOrdersListPage(),
-          ClientProfileInfoPage()
-        ],
-      )
-      )
-    );
-  }
-  Widget _bottonBar(){
-    return Obx (() =>CustomAnimatedBottomBar(
-      containerHeight: 70,
-      //Color(0xFFBB85B4)
-      backgroundColor: Color(0xFFBB85B4),
-      showElevation: true,
-      itemCornerRadius: 24 ,
-      curve: Curves.easeIn,
-      selectedIndex: con.indexTab.value,
-      onItemSelected: (index) => con.changeTab(index),
-      items: [
-        BottomNavyBarItem(
-            icon: Icon(Icons.apps),
-            title: Text('Home'),
-            activeColor : Colors.white,
-           inactiveColor: Colors.black
-        ),
-        BottomNavyBarItem(
-            icon: Icon(Icons.list),
-            title: Text('Mis pedidos'),
-            activeColor : Colors.white,
-            inactiveColor: Colors.black
-        ),
-        BottomNavyBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Perfil'),
-            activeColor : Colors.white,
-            inactiveColor: Colors.black
-        ),
-      ],
-    )
-    );
+      body: Center(child: Text('Cliente products list')),);
   }
 }
