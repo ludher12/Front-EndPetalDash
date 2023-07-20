@@ -80,7 +80,7 @@ class flowershopCategoriesCreatePage extends StatelessWidget {
         keyboardType: TextInputType.text,
         decoration:
         InputDecoration(hintText: 'Nombre',
-            prefixIcon: Icon(Icons.category)),
+            prefixIcon: Icon(Icons.local_florist)),
       ),
     );
   }
@@ -91,7 +91,7 @@ class flowershopCategoriesCreatePage extends StatelessWidget {
       child: TextField(
         controller: con.descriptionController,
         keyboardType: TextInputType.text,
-        maxLines: 4,
+        maxLines: 2,
         decoration: InputDecoration(
             hintText: 'Descripcion',
             prefixIcon: Container(
@@ -124,7 +124,7 @@ class flowershopCategoriesCreatePage extends StatelessWidget {
         margin: EdgeInsets.only(top: 40),
         child: Column(
           children: [
-            Icon(Icons.category, size: 100, color: Colors.white),
+            Icon(Icons.local_florist, size: 100, color: Colors.white),
             Text('Nueva Categoria', style: TextStyle(color: Colors.white,
                 fontWeight: FontWeight.bold,
             fontSize: 25)),
