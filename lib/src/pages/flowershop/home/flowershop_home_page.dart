@@ -53,13 +53,13 @@ class FlowershopHomePage extends StatelessWidget {
            inactiveColor: Colors.black
         ),
         BottomNavyBarItem(
-            icon: Icon(Icons.category),
+            icon: Icon(Icons.local_florist),
             title: Text('Categoria'),
             activeColor : Colors.white,
             inactiveColor: Colors.black
         ),
         BottomNavyBarItem(
-            icon: Icon(Icons.shop),
+            icon: Icon(Icons.filter_vintage),
             title: Text('Producto'),
             activeColor : Colors.white,
             inactiveColor: Colors.black
