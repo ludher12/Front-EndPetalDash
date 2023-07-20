@@ -58,15 +58,15 @@ class flowershopProductsCreatePage extends StatelessWidget {
                 children: [
                   GetBuilder<FlowershopProductsCreateController>(
                       builder: (value) =>
-                          _cardImage(context, con.imagefile1, 1)),
+                          _cardImage(context, con.imageFile1, 1)),
                   SizedBox(width: 5),
                   GetBuilder<FlowershopProductsCreateController>(
                       builder: (value) =>
-                          _cardImage(context, con.imagefile2, 2)),
+                          _cardImage(context, con.imageFile2, 2)),
                   SizedBox(width: 5),
                   GetBuilder<FlowershopProductsCreateController>(
                       builder: (value) =>
-                          _cardImage(context, con.imagefile3, 3)),
+                          _cardImage(context, con.imageFile3, 3)),
                 ],
               ),
             ),
@@ -105,11 +105,10 @@ class flowershopProductsCreatePage extends StatelessWidget {
           style: TextStyle(color: Colors.black, fontSize: 15),
         ),
         items: _dropDownItems(categories),
-        //value: con.idCategory.value == '' ? null : con.idCategory.value,
-        //value: con.idCategory,
+        value: con.idCategory.value == '' ? null : con.idCategory.value,
         onChanged: (option){
           print('Opcion seleccionada ${option}');
-          con.idCategory = option.toString();
+          con.idCategory.value = option.toString();
         },
       ),
     );
@@ -192,7 +191,7 @@ class flowershopProductsCreatePage extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
       child: ElevatedButton(
-          onPressed: () => con.createCategory(),
+          onPressed: () => con.createProduct(context),
           style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(vertical: 13)),
           child: Text(
