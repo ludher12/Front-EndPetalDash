@@ -133,7 +133,7 @@ class ClientProfileInfoPage extends StatelessWidget {
         onPressed: () => con.goToRoles(),
         icon: Icon(
           Icons.supervised_user_circle,
-          color: Colors.white,
+          color: Colors.black,
           size: 30,
         ),
       ),
