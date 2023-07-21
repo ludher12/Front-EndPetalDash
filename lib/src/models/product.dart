@@ -65,4 +65,5 @@ class Product {
     "price": price,
     "quantity": quantity,
   };
+
 }
