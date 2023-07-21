@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:petaldash/src/models/User.dart';
 import 'package:petaldash/src/pages/client/home/client_home_page.dart';
+import 'package:petaldash/src/pages/client/orders/create/client_orders_create_page.dart';
 import 'package:petaldash/src/pages/client/products/list/client_products_list_page.dart';
 import 'package:petaldash/src/pages/client/profile/info/client_profile_info_page.dart';
 import 'package:petaldash/src/pages/client/update/client_profile_update_page.dart';
@@ -54,6 +55,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/client/home', page: () => ClientHomePage()),
         GetPage(name: '/client/profile/info', page: () => ClientProfileInfoPage()),
         GetPage(name: '/client/profile/update', page: () => ClientProfileUpdatePage()),
+        GetPage(name: '/client/orders/create', page: () => ClientOrdersCreatePage()),
       ],
       theme: ThemeData(
          primaryColor: Color(0xFFBB85B4),

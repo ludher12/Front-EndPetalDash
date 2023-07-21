@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:petaldash/src/models/category.dart';
+import 'package:petaldash/src/models/product.dart';
 import 'package:petaldash/src/pages/client/products/list/client_products_list_controller.dart';
 import 'package:petaldash/src/pages/client/profile/info/client_profile_info_page.dart';
 import 'package:petaldash/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
 import 'package:petaldash/src/pages/flowershop/orders/list/flowershop_orders_list_page.dart';
 import 'package:petaldash/src/pages/register/register_page.dart';
 import 'package:petaldash/src/utils/custom_animated_bottom_bar.dart';
-
-import '../../../../models/product.dart';
-import '../../../../widgets/no_data_widget.dart';
+import 'package:petaldash/src/widgets/no_data_widget.dart';
 
 
 
@@ -23,8 +22,18 @@ class ClientProductsListPage extends StatelessWidget {
       length: con.categories.length,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50),
+          preferredSize: Size.fromHeight(110),
           child: AppBar(
+            flexibleSpace: Container(
+              margin: EdgeInsets.only(top: 15),
+              alignment: Alignment.topCenter,
+              child: Wrap(
+                children: [
+                  _textFieldSearch(context),
+                  _iconShoppingBag()
+                ],
+              ),
+            ),
             bottom: TabBar(
               isScrollable: true,
               indicatorColor: Color(0xFF540748),
@@ -65,6 +74,88 @@ class ClientProductsListPage extends StatelessWidget {
         )
       ),
     ));
+  }
+
+
+  Widget _iconShoppingBag() {
+    return SafeArea(
+      child: Container(
+        margin: EdgeInsets.only(left: 10),
+        child: con.items.value > 0
+            ? Stack(
+          children: [
+            IconButton(
+                onPressed: () => con.goToOrderCreate(),
+                icon: Icon(
+                  Icons.shopping_bag_outlined,
+                  size: 33,
+                )
+            ),
+
+            Positioned(
+                right: 4,
+                top: 12,
+                child: Container(
+                  width: 16,
+                  height: 16,
+                  alignment: Alignment.center,
+                  child: Text(
+                    '${con.items.value}',
+                    style: TextStyle(
+                        fontSize: 12
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(30))
+                  ),
+                )
+            )
+          ],
+        )
+            : IconButton(
+            onPressed: () => con.goToOrderCreate(),
+            icon: Icon(
+              Icons.shopping_bag_outlined,
+              size: 30,
+            )
+        ),
+      ),
+    );
+  }
+
+  Widget _textFieldSearch(BuildContext context) {
+    return SafeArea(
+      child: Container(
+        width: MediaQuery.of(context).size.width  * 0.75,
+        child: TextField(
+          onChanged: con.onChangeText,
+          decoration: InputDecoration(
+              hintText: 'Buscar producto',
+              suffixIcon: Icon(Icons.search, color: Colors.grey),
+              hintStyle: TextStyle(
+                  fontSize: 17,
+                  color: Colors.grey
+              ),
+              fillColor: Colors.white,
+              filled: true,
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(
+                      color: Colors.grey
+                  )
+              ),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide(
+                      color: Colors.grey
+                  )
+              ),
+              contentPadding: EdgeInsets.all(15)
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _cardProduct(BuildContext context,Product product) {

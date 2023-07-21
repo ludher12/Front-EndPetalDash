@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:get/get.dart';
-import '../../../../models/product.dart';
+import 'package:petaldash/src/models/product.dart';
+
 import 'client_products_detail_controller.dart';
 
 

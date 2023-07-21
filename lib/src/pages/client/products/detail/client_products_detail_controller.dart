@@ -4,9 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
-import '../../../../models/product.dart';
-import '../list/client_products_list_controller.dart';
+import 'package:petaldash/src/models/product.dart';
+import 'package:petaldash/src/pages/client/products/list/client_products_list_controller.dart';
 
 class ClientProductsDetailController extends GetxController {
 
@@ -59,9 +58,9 @@ class ClientProductsDetailController extends GetxController {
       GetStorage().write('shopping_bag', selectedProducts);
       Fluttertoast.showToast(msg: 'Producto agregado');
 
-      //productsListController.items.value = 0;
+      productsListController.items.value = 0;
       selectedProducts.forEach((p) {
-        //productsListController.items.value = productsListController.items.value + p.quantity!;
+        productsListController.items.value = productsListController.items.value + p.quantity!;
       });
 
     }
