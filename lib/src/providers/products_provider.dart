@@ -14,22 +14,19 @@ class ProductsProvider extends GetConnect {
 
   User userSession = User.fromJson(GetStorage().read('user') ?? {});
 
+
   Future<List<Product>> findByCategory(String idCategory) async {
-    Response response = await get(
-        '$url/findByCategory/$idCategory',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': userSession.sessionToken ?? ''
-        }
-    ); // ESPERAR HASTA QUE EL SERVIDOR NOS RETORNE LA RESPUESTA
+    Response response = await get('$url/findByCategory/$idCategory', headers: {
+      'Content-Type': 'application/json',
+      'Authorization': userSession.sessionToken ?? ''
+    }); //Espera hasta que el servidor nos retorne la respuesta
 
     if (response.statusCode == 401) {
-      Get.snackbar('Peticion denegada', 'Tu usuario no tiene permitido leer esta informacion');
+      Get.snackbar('Peticion denegada',
+          'Tu usuario no tiene permitido leer esta peticion');
       return [];
     }
-
     List<Product> products = Product.fromJsonList(response.body);
-
     return products;
   }
 
