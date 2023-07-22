@@ -5,6 +5,7 @@ Address addressFromJson(String str) => Address.fromJson(json.decode(str));
 String addressToJson(Address data) => json.encode(data.toJson());
 
 class Address {
+
   String? id;
   String? address;
   String? neighborhood;
@@ -13,12 +14,12 @@ class Address {
   double? lng;
 
   Address({
-     this.id,
-     this.address,
-     this.neighborhood,
-     this.idUser,
-     this.lat,
-     this.lng,
+    this.id,
+    this.address,
+    this.neighborhood,
+    this.idUser,
+    this.lat,
+    this.lng,
   });
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
@@ -26,9 +27,20 @@ class Address {
     address: json["address"],
     neighborhood: json["neighborhood"],
     idUser: json["id_user"],
-    lat: json["lat"]?.toDouble(),
-    lng: json["lng"]?.toDouble(),
+    lat: json["lat"],
+    lng: json["lng"],
   );
+
+  static List<Address> fromJsonList(List<dynamic> jsonList) {
+    List<Address> toList = [];
+
+    jsonList.forEach((item) {
+      Address address = Address.fromJson(item);
+      toList.add(address);
+    });
+
+    return toList;
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,
