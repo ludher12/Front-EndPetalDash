@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-//import 'package:geocoding/geocoding.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-//import 'package:location/location.dart' as location;
+import 'package:location/location.dart' as location;
 
 class ClientAddressMapController extends GetxController {
 
@@ -12,62 +12,62 @@ class ClientAddressMapController extends GetxController {
       target: LatLng(17.065278, -96.7244856),
       zoom: 18
   );
-  //
-  // LatLng? addressLatLng;
-  // var addressName = ''.obs;
-  //
+
+   LatLng? addressLatLng;
+   var addressName = ''.obs;
+
    Completer<GoogleMapController> mapController = Completer();
    Position? position;
-  //
-  // ClientAddressMapController() {
-  //   checkGPS(); // VERIFICAR SI EL GPS ESTA ACTIVO
-  // }
-  //
-  // Future setLocationDraggableInfo() async {
-  //
-  //   double lat = initialPosition.target.latitude;
-  //   double lng = initialPosition.target.longitude;
-  //
-  //   List<Placemark> address = await placemarkFromCoordinates(lat, lng);
-  //
-  //   if (address.isNotEmpty) {
-  //     String direction = address[0].thoroughfare ?? '';
-  //     String street = address[0].subThoroughfare ?? '';
-  //     String city = address[0].locality ?? '';
-  //     String department = address[0].administrativeArea ?? '';
-  //     String country = address[0].country ?? '';
-  //     addressName.value = '$direction #$street, $city, $department';
-  //     addressLatLng = LatLng(lat, lng);
-  //     print('LAT Y LNG: ${addressLatLng?.latitude ?? 0} ${addressLatLng?.longitude ?? 0}');
-  //   }
-  //
-  // }
-  //
-  // void selectRefPoint(BuildContext context) {
-  //   if (addressLatLng != null) {
-  //     Map<String, dynamic> data = {
-  //       'address': addressName.value,
-  //       'lat': addressLatLng!.latitude,
-  //       'lng': addressLatLng!.longitude,
-  //     };
-  //     Navigator.pop(context, data);
-  //   }
-  //
-  // }
-  //
-  // void checkGPS() async {
-  //   bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
-  //
-  //   if (isLocationEnabled == true) {
-  //     updateLocation();
-  //   }
-  //   else {
-  //     bool locationGPS = await location.Location().requestService();
-  //     if (locationGPS == true) {
-  //       updateLocation();
-  //     }
-  //   }
-  // }
+
+  ClientAddressMapController() {
+    checkGPS(); // VERIFICAR SI EL GPS ESTA ACTIVO
+  }
+
+  Future setLocationDraggableInfo() async {
+
+    double lat = initialPosition.target.latitude;
+    double lng = initialPosition.target.longitude;
+
+    List<Placemark> address = await placemarkFromCoordinates(lat, lng);
+
+    if (address.isNotEmpty) {
+      String direction = address[0].thoroughfare ?? '';
+      String street = address[0].subThoroughfare ?? '';
+      String city = address[0].locality ?? '';
+      String department = address[0].administrativeArea ?? '';
+      String country = address[0].country ?? '';
+      addressName.value = '$direction #$street, $city, $department';
+      addressLatLng = LatLng(lat, lng);
+      print('LAT Y LNG: ${addressLatLng?.latitude ?? 0} ${addressLatLng?.longitude ?? 0}');
+    }
+
+  }
+
+  void selectRefPoint(BuildContext context) {
+    if (addressLatLng != null) {
+      Map<String, dynamic> data = {
+        'address': addressName.value,
+        'lat': addressLatLng!.latitude,
+        'lng': addressLatLng!.longitude,
+      };
+      Navigator.pop(context, data);
+    }
+
+  }
+
+  void checkGPS() async {
+    bool isLocationEnabled = await Geolocator.isLocationServiceEnabled();
+
+    if (isLocationEnabled == true) {
+      updateLocation();
+    }
+    else {
+      bool locationGPS = await location.Location().requestService();
+      if (locationGPS == true) {
+        updateLocation();
+      }
+    }
+  }
 
   void updateLocation() async {
     try{

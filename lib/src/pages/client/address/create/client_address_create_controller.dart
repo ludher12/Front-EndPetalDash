@@ -18,14 +18,7 @@ class ClientAddressCreateController extends GetxController {
   TextEditingController neighborhoodController = TextEditingController();
   TextEditingController refPointController = TextEditingController();
 
-  void openGoogleMaps (BuildContext context) {
-    showMaterialModalBottomSheet(
-        context: context,
-        builder: (context) => ClientAddressMapPage(),
-        isDismissible: false,
-        enableDrag: false
-    );
-  }
+
 
   //
   // double latRefPoint = 0;
@@ -37,19 +30,19 @@ class ClientAddressCreateController extends GetxController {
   //
   // ClientAddressListController clientAddressListController = Get.find();
   //
-  // void openGoogleMaps(BuildContext context) async {
-  //   Map<String, dynamic> refPointMap = await showMaterialModalBottomSheet(
-  //       context: context,
-  //       builder: (context) => ClientAddressMapPage(),
-  //       isDismissible: false,
-  //       enableDrag: false
-  //   );
-  //
-  //   print('REF POINT MAP ${refPointMap}');
-  //   refPointController.text = refPointMap['address'];
-  //   latRefPoint = refPointMap['lat'];
-  //   lngRefPoint = refPointMap['lng'];
-  // }
+  void openGoogleMaps(BuildContext context) async {
+    Map<String, dynamic> refPointMap = await showMaterialModalBottomSheet(
+        context: context,
+        builder: (context) => ClientAddressMapPage(),
+        isDismissible: false,
+        enableDrag: false
+    );
+
+    print('REF POINT MAP ${refPointMap}');
+    refPointController.text = refPointMap['address'];
+    //latRefPoint = refPointMap['lat'];
+    //lngRefPoint = refPointMap['lng'];
+  }
   //
   // void createAddress() async {
   //   String addressName = addressController.text;
