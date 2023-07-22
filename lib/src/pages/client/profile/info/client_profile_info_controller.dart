@@ -8,6 +8,8 @@ class ClientProfileInfoController extends GetxController{
   var user = User.fromJson(GetStorage().read('user') ?? {}).obs;
 
   void singnOut(){
+    GetStorage().remove('address');
+    GetStorage().remove('shopping_bag');
     GetStorage().remove('user');
     Get.offNamedUntil('/', (route) => false); // eliminar el historial de pantallas
   }
