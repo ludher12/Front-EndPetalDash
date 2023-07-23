@@ -11,6 +11,7 @@ import 'package:petaldash/src/pages/client/profile/info/client_profile_info_page
 import 'package:petaldash/src/pages/client/update/client_profile_update_page.dart';
 import 'package:petaldash/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
 import 'package:petaldash/src/pages/flowershop/home/flowershop_home_page.dart';
+import 'package:petaldash/src/pages/flowershop/orders/detail/flowershop_orders_detail_page.dart';
 import 'package:petaldash/src/pages/flowershop/orders/list/flowershop_orders_list_page.dart';
 import 'package:petaldash/src/pages/home/home_page.dart';
 import 'package:petaldash/src/pages/login/login_page.dart';
@@ -53,6 +54,7 @@ class _MyAppState extends State<MyApp> {
         GetPage(name: '/roles', page: ()=> RolesPage()),
         GetPage(name: '/flowershop/home', page: () => FlowershopHomePage()),
         GetPage(name: '/flowershop/orders/list', page: () => FlowershopOrdersListPage()),
+        GetPage(name: '/flowershop/orders/detail', page: () => FlowershopOrdersDetailPage()),
         GetPage(name: '/delivery/orders/list', page: () => DeliveryOrdersListPage()),
         GetPage(name: '/client/products/list', page: () => ClientProductsListPage()),
         GetPage(name: '/client/home', page: () => ClientHomePage()),
