@@ -17,9 +17,9 @@ class FlowershopOrdersDetailPage extends StatelessWidget {
       bottomNavigationBar: Container(
         color: Color.fromRGBO(245, 245, 245, 1),
         height: con.order.status == 'PAGADO'
-            ? MediaQuery.of(context).size.height * 0.45
+            ? MediaQuery.of(context).size.height * 0.50
             : MediaQuery.of(context).size.height * 0.45,
-        // padding: EdgeInsets.only(top: 5),
+        padding: EdgeInsets.only(top: 5),
         child: Column(
           children: [
             _dataDate(),
@@ -208,7 +208,19 @@ class FlowershopOrdersDetailPage extends StatelessWidget {
   Widget _totalToPay(BuildContext context) {
     return Column(
       children: [
-        Divider(height: 1, color: Colors.grey[300]),
+        Divider(height: 1, color: Colors.grey[400]),
+        Container(
+          width: double.infinity,
+          alignment: Alignment.centerLeft,
+          margin: EdgeInsets.only(left: 30),
+          child: Text(
+              'ASIGNA AL REPARTIDOR',
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            color: Color(0xFF540748)
+          ),),
+        ),
+        _dropDownDeliveryMen(con.users),
         Container(
           margin: EdgeInsets.only(left: 20, top: 25),
           child: Row(

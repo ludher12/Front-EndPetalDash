@@ -19,7 +19,7 @@ class FlowershopOrdersDetailController extends GetxController {
 
   FlowershopOrdersDetailController() {
     print('Order: ${order.toJson()}');
-    // getDeliveryMen();
+    getDeliveryMen();
     getTotal();
   }
 
@@ -37,11 +37,11 @@ class FlowershopOrdersDetailController extends GetxController {
     }
   }
 
-  // void getDeliveryMen() async {
-  //   var result = await usersProvider.findDeliveryMen();
-  //   users.clear();
-  //   users.addAll(result);
-  // }
+   void getDeliveryMen() async {
+     var result = await usersProvider.findDeliveryMen();
+     users.clear();
+     users.addAll(result);
+   }
 
   void getTotal() {
     total.value = 0.0;
