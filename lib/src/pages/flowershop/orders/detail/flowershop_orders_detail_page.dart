@@ -63,8 +63,8 @@ class FlowershopOrdersDetailPage extends StatelessWidget {
   }
 
   Widget _dataDelivery() {
-    return con.order.status != 'PAGADO'
-        ? Container(
+      return con.order.status !='PAGADO'
+          ? Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: ListTile(
         title: Text('Repartidor asignado'),
@@ -72,7 +72,7 @@ class FlowershopOrdersDetailPage extends StatelessWidget {
         trailing: Icon(Icons.delivery_dining),
       ),
     )
-        : Container();
+      : Container();
   }
 
   Widget _dataAddress() {
@@ -209,7 +209,7 @@ class FlowershopOrdersDetailPage extends StatelessWidget {
     return Column(
       children: [
         Divider(height: 1, color: Colors.grey[400]),
-        Container(
+        con.order.status == 'PAGADO' ? Container(
           width: double.infinity,
           alignment: Alignment.centerLeft,
           margin: EdgeInsets.only(left: 30),
@@ -219,12 +219,13 @@ class FlowershopOrdersDetailPage extends StatelessWidget {
             fontStyle: FontStyle.italic,
             color: Color(0xFF540748)
           ),),
-        ),
-        _dropDownDeliveryMen(con.users),
+        ) : Container() ,
+        con.order.status == 'PAGADO' ? _dropDownDeliveryMen(con.users): Container(),
         Container(
           margin: EdgeInsets.only(left: 20, top: 25),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: con.order.status == 'PAGADO' ? MainAxisAlignment.center
+                : MainAxisAlignment.start,
             children: [
               Text(
                 'TOTAL: \$${con.total.value}',
@@ -233,11 +234,12 @@ class FlowershopOrdersDetailPage extends StatelessWidget {
                     fontSize: 17
                 ),
               ),
-              Container(
+              con.order.status == 'PAGADO'
+                  ? Container(
                 margin: EdgeInsets.symmetric(horizontal: 30),
 
                 child: ElevatedButton(
-                    onPressed: () => {},
+                    onPressed: () => con.updateOrder(),
                     style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(15)
                     ),
@@ -249,6 +251,7 @@ class FlowershopOrdersDetailPage extends StatelessWidget {
                     )
                 ),
               )
+                  : Container()
             ],
           ),
         )
