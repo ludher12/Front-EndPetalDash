@@ -237,7 +237,7 @@ class FlowershopOrdersDetailPage extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 30),
 
                 child: ElevatedButton(
-                    onPressed: () => {},
+                    onPressed: () => con.updateOrder(),
                     style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.all(15)
                     ),
