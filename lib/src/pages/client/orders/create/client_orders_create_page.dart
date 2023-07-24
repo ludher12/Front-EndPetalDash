@@ -38,7 +38,6 @@ class ClientOrdersCreatePage extends StatelessWidget {
           child:
           Text('')
           //NoDataWidget(text: 'No hay ningun producto agregado aun')
-
       ),
     ));
   }
