@@ -17,7 +17,7 @@ class FlowershopOrdersDetailPage extends StatelessWidget {
       bottomNavigationBar: Container(
         color: Color.fromRGBO(245, 245, 245, 1),
         height: con.order.status == 'PAGADO'
-            ? MediaQuery.of(context).size.height * 0.50
+            ? MediaQuery.of(context).size.height * 0.55
             : MediaQuery.of(context).size.height * 0.45,
         padding: EdgeInsets.only(top: 5),
         child: Column(

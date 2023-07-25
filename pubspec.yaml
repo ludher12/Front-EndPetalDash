@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   get_storage: ^2.1.1
-  http: ^1.1.0
+  http: ^0.13.4
   sn_progress_dialog: ^1.0.0-nullsafety.0
   image_picker: ^1.0.1
   modal_bottom_sheet: ^3.0.0-pre
@@ -48,6 +48,7 @@ dependencies:
   geocoding: ^2.0.4
   location: ^4.2.0
   intl: ^0.18.1
+  flutter_polyline_points: ^1.0.0
 
 dev_dependencies:
   flutter_test:

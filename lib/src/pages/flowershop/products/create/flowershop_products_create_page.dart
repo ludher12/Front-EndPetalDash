@@ -95,7 +95,7 @@ class flowershopProductsCreatePage extends StatelessWidget {
           alignment: Alignment.centerRight,
           child: Icon(
             Icons.arrow_drop_down_circle,
-            color: Colors.amber,
+            color: Color(0xFF540748),
           ),
         ),
         elevation: 3,
