@@ -17,7 +17,7 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
     return Obx(() => Scaffold(
       bottomNavigationBar: Container(
         color: Color.fromRGBO(245, 245, 245, 1),
-        height:MediaQuery.of(context).size.height * 0.4,
+        height:MediaQuery.of(context).size.height * 0.45,
         padding: EdgeInsets.only(top: 5),
         child: Column(
           children: [
@@ -86,7 +86,7 @@ class DeliveryOrdersDetailPage extends StatelessWidget {
 
   Widget _cardProduct(Product product) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 7),
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
       child: Row(
         children: [
           _imageProduct(product),

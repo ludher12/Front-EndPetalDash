@@ -72,7 +72,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
 
   Widget _cardOrderInfo(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.45,
       width: double.infinity,
       decoration: BoxDecoration(
           color: Color(0xF5001D3B),
@@ -238,6 +238,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
       myLocationButtonEnabled: false,
       myLocationEnabled: false,
       markers: Set<Marker>.of(con.markers.values),
+      polylines: con.polylines,
     );
   }
 }

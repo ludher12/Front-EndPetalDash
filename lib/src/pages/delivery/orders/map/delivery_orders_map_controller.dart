@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as location;
+import 'package:petaldash/src/environment/environment.dart';
 import 'package:petaldash/src/models/order.dart';
 import 'package:petaldash/src/providers/orders_provider.dart';
 
@@ -16,6 +18,7 @@ class DeliveryOrdersMapController extends GetxController {
   CameraPosition initialPosition =
       CameraPosition(target: LatLng(17.065278, -96.7244856), zoom: 18);
 
+
   LatLng? addressLatLng;
   var addressName = ''.obs;
 
@@ -25,6 +28,9 @@ class DeliveryOrdersMapController extends GetxController {
   BitmapDescriptor? deliveryMarker;
   BitmapDescriptor? homeMarker;
   StreamSubscription? positionSubscribe;
+
+  Set<Polyline> polylines = <Polyline>{}.obs;
+  List<LatLng> points = [];
 
   DeliveryOrdersMapController() {
     print('Order: ${order.toJson()}');
@@ -76,17 +82,43 @@ class DeliveryOrdersMapController extends GetxController {
     }
   }
 
+  Future<void> setPolylines(LatLng from, LatLng to) async {
+    PointLatLng pointFrom = PointLatLng(from.latitude, from.longitude);
+    PointLatLng pointTo = PointLatLng(to.latitude, to.longitude);
+    PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
+        Environment.API_KEY_MAPS,
+        pointFrom,
+        pointTo
+    );
+
+    for (PointLatLng point in result.points) {
+      points.add(LatLng(point.latitude, point.longitude));
+    }
+
+    Polyline polyline = Polyline(
+        polylineId: PolylineId('poly'),
+        color: Color(0xFFBB85B4),
+        points: points,
+        width: 7
+    );
+
+    polylines.add(polyline);
+    update();
+  }
+
+
+
   void updateLocation() async {
     try{
       await _determinePosition();
       position = await Geolocator.getLastKnownPosition(); // LAT Y LNG (ACTUAL)
       saveLocation();
-      animateCameraPosition(position?.latitude ?? 1.2004567, position?.longitude ?? -77.2787444);
+      animateCameraPosition(position?.latitude ?? 17.065278, position?.longitude ?? -96.7244856);
 
       addMarker(
           'delivery',
-          position?.latitude ?? 1.2004567,
-          position?.longitude ?? -77.2787444,
+          position?.latitude ?? 17.065278,
+          position?.longitude ?? -96.7244856,
           'Tu posicion',
           '',
           deliveryMarker!
@@ -94,17 +126,17 @@ class DeliveryOrdersMapController extends GetxController {
 
       addMarker(
           'home',
-          order.address?.lat ?? 1.2004567,
-          order.address?.lng ?? -77.2787444,
+          order.address?.lat ?? 17.065278,
+          order.address?.lng ?? -96.7244856,
           'Lugar de entrega',
           '',
           homeMarker!
       );
 
       LatLng from = LatLng(position!.latitude, position!.longitude);
-      LatLng to = LatLng(order.address?.lat ?? 1.2004567, order.address?.lng ?? -77.2787444);
+      LatLng to = LatLng(order.address?.lat ?? 17.065278, order.address?.lng ?? -96.7244856);
 
-      //setPolylines(from, to);
+      setPolylines(from, to);
 
       LocationSettings locationSettings = LocationSettings(
           accuracy: LocationAccuracy.best,  // obtener el mejor rendiemiento para tener la posición en tiempo real
@@ -117,13 +149,13 @@ class DeliveryOrdersMapController extends GetxController {
         position = pos;
         addMarker(  // para que se vuelva a re dibujar en la posición actual
             'delivery',
-            position?.latitude ?? 1.2004567,
-            position?.longitude ?? -77.2787444,
+            position?.latitude ?? 17.065278,
+            position?.longitude ?? -96.7244856,
             'Tu posicion',
             '',
             deliveryMarker!
         );
-        animateCameraPosition(position?.latitude ?? 1.2004567, position?.longitude ?? -77.2787444);
+        animateCameraPosition(position?.latitude ?? 17.065278, position?.longitude ?? -96.7244856);
         //emitPosition();
         //isCloseToDeliveryPosition();
       });
