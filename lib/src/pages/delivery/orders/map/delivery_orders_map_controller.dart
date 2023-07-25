@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -162,6 +163,17 @@ class DeliveryOrdersMapController extends GetxController {
 
     } catch(e) {
       print('Error: ${e}');
+    }
+  }
+
+  void callNumber() async{
+    String number = order.client?.phone ?? ''; //set the number here
+    await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
+  void centerPosition() {
+    if (position != null) {
+      animateCameraPosition(position!.latitude, position!.longitude);
     }
   }
 

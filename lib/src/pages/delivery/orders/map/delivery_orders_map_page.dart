@@ -132,7 +132,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
                 color: Colors.grey[200]
             ),
             child: IconButton(
-              onPressed: () => {},
+              onPressed: () => con.callNumber(),
               icon: Icon(Icons.phone, color: Colors.black),
             ),
           )
@@ -208,7 +208,7 @@ class DeliveryOrdersMapPage extends StatelessWidget {
 
   Widget _iconCenterMyLocation() {
     return GestureDetector(
-     // onTap: () => con.centerPosition(),
+      onTap: () => con.centerPosition(),
       child: Container(
         alignment: Alignment.centerRight,
         margin: EdgeInsets.symmetric(horizontal: 5),
