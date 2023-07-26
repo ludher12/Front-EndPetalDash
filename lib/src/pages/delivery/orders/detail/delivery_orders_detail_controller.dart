@@ -6,12 +6,14 @@ import 'package:petaldash/src/models/user.dart';
 import 'package:petaldash/src/providers/orders_provider.dart';
 import 'package:petaldash/src/providers/user_providers.dart';
 
+
 class DeliveryOrdersDetailController extends GetxController {
 
   Order order = Order.fromJson(Get.arguments['order']);
 
   var total = 0.0.obs;
   var idDelivery = ''.obs;
+
 
   UserProvider usersProvider = UserProvider();
   OrdersProvider ordersProvider = OrdersProvider();
